@@ -1,0 +1,142 @@
+openapi: 3.0.3
+info:
+  title: OpenApi RouteExpander
+  description: API for Test.
+  version: 0.0.1
+servers:
+  - url: https://{host}
+    variables:
+      host:
+        default: ""
+        description: Server URL
+paths:
+  /api/health/:
+    get:
+      summary: Health Check
+      description: Returns the health status of the API.
+      operationId: healthCheck
+      tags:
+        - Server
+      responses:
+        "200":
+          description: API is up and running.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ERROR
+        "500":
+          description: Health check failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ERROR
+                  message:
+                    type: string
+                    example: Service is down.
+  /api/health/version:
+    get:
+      summary: Version Information
+      description: Returns the current version of the API.
+      operationId: getVersion
+      tags:
+        - Server
+      parameters:
+        - name: format
+          in: query
+          description: Response format.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully retrieved version information.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  version:
+                    type: string
+                    example: 1.0.0
+                  hostname:
+                    type: string
+                    example: server-1
+        "500":
+          description: Failed to retrieve version information.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unable to fetch version data.
+  /api/health/updateLogging:
+    post:
+      summary: Update Logging Settings
+      description: Updates the logging level of the API dynamically.
+      operationId: updateLogging
+      tags:
+        - Server
+      parameters:
+        - name: logLevel
+          in: query
+          description: Desired logging level.
+          schema:
+            type: string
+            enum:
+              - verbose
+              - debug
+              - info
+              - warning
+              - error
+              - fatal
+        - name: logPattern
+          in: query
+          description: Desired logging level.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Logging level updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Logging level updated.
+        "400":
+          description: Invalid logging level provided.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Invalid logging level specified.
+        "500":
+          description: Failed to update logging settings.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Could not update logging settings.
+components:
+  schemas:
+    Schema1:
+      $ref: "../example/input/schemas.yaml#/components/schemas/Schema1"
+    Schema2:
+      $ref: "../example/input/schemas.yaml#/components/schemas/Schema2"

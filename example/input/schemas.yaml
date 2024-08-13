@@ -1,0 +1,13 @@
+openapi: 3.0.3
+components:
+  schemas:
+    Schema1:
+      type: object
+      properties:
+        name:
+          type: string
+    Schema2:
+      type: object
+      properties:
+        name:
+          type: number

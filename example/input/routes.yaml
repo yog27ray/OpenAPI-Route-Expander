@@ -1,0 +1,8 @@
+openapi: 3.0.3
+info:
+  title: Routes
+  description: Health Routes
+  version: 0.0.1
+paths:
+  /api:
+    $ref: './api.routes.yaml#/paths'

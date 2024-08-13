@@ -1,0 +1,48 @@
+{
+  "name": "openapi-routeexpander",
+  "version": "0.0.0",
+  "description": "A utility for resolving $ref in OpenAPI YAML routes, generating new YAML files without $ref, ready for OpenAPI processing.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yog27ray/OpenAPI-RouteExpander.git"
+  },
+  "author": "yog27ray",
+  "license": "MIT",
+  "keywords": [
+    "OpenAPI",
+    "$ref",
+    "YAML",
+    "TypeScript",
+    "API",
+    "Resolver"
+  ],
+  "bugs": {
+    "url": "https://github.com/yog27ray/OpenAPI-RouteExpander/issues"
+  },
+  "homepage": "https://github.com/yog27ray/OpenAPI-RouteExpander#readme",
+  "devDependencies": {
+    "@types/debug": "4.1.12",
+    "@types/jest": "29.5.12",
+    "@types/node": "22.2.0",
+    "@types/parse": "3.0.9",
+    "@typescript-eslint/eslint-plugin": "7.6.0",
+    "@typescript-eslint/parser": "7.6.0",
+    "eslint": "8.57.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-promise": "6.1.1",
+    "eslint-plugin-typescript": "0.14.0",
+    "jest": "29.7.0",
+    "parse": ">=4.3.1",
+    "parse-server": "7.1.0",
+    "ts-jest": "^29.2.4",
+    "ts-node": "10.9.2",
+    "typescript": "5.4.4"
+  }
+}
