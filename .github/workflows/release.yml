@@ -41,7 +41,6 @@ jobs:
         VERSION=$(npm version ${{ github.event.inputs.increment-type }})
         npm run build
         cd dist
-        ls -lah
         npm publish
         cd ..
         git push
