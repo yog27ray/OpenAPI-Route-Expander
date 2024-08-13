@@ -1,8 +1,8 @@
 name: OpenApi-RouteExpander Merge Check
 
 on:
-  pull_request:
-    branches: [ master ]
+  push:
+    branches: [ main ]
 
 jobs:
   build:
@@ -22,13 +22,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: node_modules/eslint/bin/eslint.js  --ext .ts src
-    - run: node_modules/eslint/bin/eslint.js  --ext .ts typings
-    - run: node_modules/tslint/bin/tslint -p ./ -c src/tslint.json
     - run: node_modules/typescript/bin/tsc -p ./
     - run: rm -r dist
     - name: coverage
       run: npm run coverage
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4.0.1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}

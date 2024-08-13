@@ -1,0 +1,32 @@
+name: OpenApi-RouteExpander Merge Check
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.event.number }}-build-${{ matrix.node-version }}-${{ matrix.mongodb-version }}
+      cancel-in-progress: true
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [18.x, 20.x, 21.x] # https://endoflife.date/nodejs
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - run: node_modules/eslint/bin/eslint.js  --ext .ts src
+    - run: node_modules/typescript/bin/tsc -p ./
+    - run: rm -r dist
+    - name: coverage
+      run: npm run coverage
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4.0.1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
