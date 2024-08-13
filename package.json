@@ -1,6 +1,6 @@
 {
   "name": "openapi-route-expander",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A utility for resolving $ref in OpenAPI YAML routes, generating new YAML files without $ref, ready for OpenAPI processing.",
   "main": "index.js",
   "scripts": {
