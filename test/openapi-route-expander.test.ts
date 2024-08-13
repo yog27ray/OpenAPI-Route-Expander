@@ -12,7 +12,7 @@ describe('resolveRefsInRoutes', () => {
   });
   test('throw error when input path does not exist', () => {
     expect(() => resolveRefsInRoutes(`${__dirname}/../example/input/openapi-1.yaml`, `${__dirname}/../out/openapi.yaml`))
-      .toThrow(Error('Path doesn\'t exists. "/Users/yog27ray/projects/yog27ray/github/OpenAPI-RouteExpander/test/../example/input/openapi-1.yaml"'));
+      .toThrow(Error(`Path doesn't exists. "${__dirname}/OpenAPI-RouteExpander/test/../example/input/openapi-1.yaml"`));
   });
   test('writes the output of the file.', () => {
     resolveRefsInRoutes(`${__dirname}/../example/input/openapi.yaml`, `${__dirname}/../out/openapi.yaml`);
