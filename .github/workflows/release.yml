@@ -1,4 +1,4 @@
-name: OpenApi-RouteExpander Release
+name: Release
 run-name: "Release"
 on:
   workflow_dispatch:
