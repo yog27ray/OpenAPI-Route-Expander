@@ -17,12 +17,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     concurrency:
-      group: ${{ github.event.number }}-build-${{ matrix.node-version }}-${{ matrix.mongodb-version }}
+      group: release
       cancel-in-progress: true
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [18.x, 20.x, 21.x] # https://endoflife.date/nodejs
     steps:
     - uses: actions/checkout@v4
       with:
@@ -30,11 +26,11 @@ jobs:
         ref: main
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
     - name: Update package
       id: update_package
       run: |
+        git config --global user.email "yog27ray@example.com"
+        npm error   git config --global user.name "Yogendra Singh"
         VERSION=$(npm version ${{ github.event.inputs.increment-type }})
         npm run build
         cd dist
