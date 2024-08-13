@@ -1,4 +1,4 @@
-name: PR Check
+name: OpenApi-RouteExpander PR Check
 run-name: "PR Main"
 on:
   pull_request:

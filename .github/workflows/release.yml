@@ -1,12 +1,13 @@
-name: Release
+name: OpenApi-RouteExpander Release
 run-name: "Release"
 on:
   workflow_dispatch:
     inputs:
       increment-type:
-        description: 'Version increment type'
+        description: 'Version increment type (patch, minor, major)'
         required: true
         default: 'patch'
+        type: 'choice'
         options:
           - patch
           - minor
