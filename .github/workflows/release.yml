@@ -1,0 +1,39 @@
+name: OpenApi-RouteExpander Release
+run-name: "Release"
+on:
+  workflow_dispatch:
+    inputs:
+      increment-type:
+        description: 'Version increment type (patch, minor, major)'
+        required: true
+        default: 'patch'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.event.number }}-build-${{ matrix.node-version }}-${{ matrix.mongodb-version }}
+      cancel-in-progress: true
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [18.x, 20.x, 21.x] # https://endoflife.date/nodejs
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.pat_github}}
+        ref: main
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Update package
+      id: update_package
+      run: |
+        VERSION=$(npm version patch)
+        npm run build
+        cd dist
+        ls -lah
+        npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

@@ -1,5 +1,5 @@
-name: OpenApi-RouteExpander Merge Check
-
+name: OpenApi-RouteExpander PR Check
+run-name: "PR Main"
 on:
   pull_request:
     branches: [ main ]

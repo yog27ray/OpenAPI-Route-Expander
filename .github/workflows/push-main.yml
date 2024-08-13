@@ -1,5 +1,5 @@
-name: OpenApi-RouteExpander Merge Check
-
+name: OpenApi-RouteExpander Push Task
+run-name: "Push Main"
 on:
   push:
     branches: [ main ]
