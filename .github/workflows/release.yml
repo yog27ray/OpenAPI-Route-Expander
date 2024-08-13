@@ -35,6 +35,7 @@ jobs:
     - name: Update package
       id: update_package
       run: |
+        npm ci
         git config --global user.email "yog27ray@example.com"
         git config --global user.name "Yogendra Singh"
         VERSION=$(npm version ${{ github.event.inputs.increment-type }})
