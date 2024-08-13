@@ -11,7 +11,7 @@ import { YAMLUtil } from './util/y-a-m-l.util';
 
 export function resolveRefsInRoutes(inputFilePath: string, outputFilePath: string): void {
   Validation.absolutePaths([inputFilePath, outputFilePath]);
-  Validation.pathExists([inputFilePath]);
+  Validation.pathExist(inputFilePath);
   FileUtil.createDirector(FileUtil.getDirectory(outputFilePath));
   let openApiJSON = FileUtil.readYaml(inputFilePath);
   openApiJSON = replaceRelativeToAbsolutePath(openApiJSON, FileUtil.getDirectory(inputFilePath));
