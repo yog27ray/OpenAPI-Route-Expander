@@ -1,6 +1,6 @@
+import fs from 'fs';
 import { Validation } from './validation';
 import { FileUtil } from './util/file.util';
-import fs from 'fs';
 import {
   fixOpenApiAbsoluteRoute,
   fixOpenApiYamlStringIssue,

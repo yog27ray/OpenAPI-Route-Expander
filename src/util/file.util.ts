@@ -7,7 +7,7 @@ export class FileUtil {
   }
 
   static readFile(path: string): string {
-    return fs.readFileSync(path, { encoding: 'utf-8', flag: 'r' })
+    return fs.readFileSync(path, { encoding: 'utf-8', flag: 'r' });
   }
 
   static readYaml(path: string): Record<string, unknown> {

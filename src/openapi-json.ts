@@ -1,10 +1,9 @@
-import fs from 'fs';
-import { FileUtil } from './util/file.util';
 import path from 'path';
+import { FileUtil } from './util/file.util';
 
 export function replaceRelativeToAbsolutePath<T extends Record<string, unknown>>(json: T, basePath: string): T {
   if (json instanceof Array) {
-    return json.map((each) => replaceRelativeToAbsolutePath(each, basePath)) as unknown as T;
+    return json.map((each: Record<string, unknown>) => replaceRelativeToAbsolutePath(each, basePath)) as unknown as T;
   }
   if (typeof json !== 'object') {
     return json;
@@ -24,8 +23,8 @@ function extractSubPath<T extends Record<string, unknown>>(json: T, paths: Array
   if (!paths.length) {
     return json;
   }
-  const path = paths.shift();
-  return extractSubPath(path === '' ? json : json[path] as T, paths);
+  const item = paths.shift();
+  return extractSubPath(item === '' ? json : json[item] as T, paths);
 }
 
 export function mergeNestedPaths<T extends Record<string, unknown>>(paths: T, filePath: string, pathPrefix: string = ''): T {
@@ -38,8 +37,8 @@ export function mergeNestedPaths<T extends Record<string, unknown>>(paths: T, fi
         [pathPrefix]: {
           ...(result[pathPrefix] || {}),
           [key]: replaceRelativeToAbsolutePath(paths[key] as T, currentFolder),
-        },
-      };
+        } as Record<string, unknown>,
+      } as T;
     }
     if (key === '$ref') {
       const [nextYamlFileRelativePath, nextYamlSubPath = '/'] = (paths[key] as string).split('#');
@@ -60,7 +59,7 @@ export function mergeNestedPaths<T extends Record<string, unknown>>(paths: T, fi
 
 export function fixOpenApiAbsoluteRoute<T extends Record<string, unknown>>(json: T, basePath: string): T {
   if (json instanceof Array) {
-    return json.map((each) => fixOpenApiAbsoluteRoute(each, basePath)) as unknown as T;
+    return json.map((each: Record<string, unknown>) => fixOpenApiAbsoluteRoute(each, basePath)) as unknown as T;
   }
   if (typeof json !== 'object') {
     return json;

@@ -44,5 +44,9 @@
     "ts-jest": "^29.2.4",
     "ts-node": "10.9.2",
     "typescript": "5.4.4"
+  },
+  "dependencies": {
+    "path": "0.12.7",
+    "yaml": "2.5.0"
   }
 }
