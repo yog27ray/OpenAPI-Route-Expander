@@ -4,9 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       increment-type:
-        description: 'Version increment type (patch, minor, major)'
+        description: 'Version increment type'
         required: true
         default: 'patch'
+        options:
+          - patch
+          - minor
+          - major
 
 jobs:
   build:
@@ -30,7 +34,7 @@ jobs:
     - name: Update package
       id: update_package
       run: |
-        VERSION=$(npm version patch)
+        VERSION=$(npm version ${{ github.event.inputs.increment-type }})
         npm run build
         cd dist
         ls -lah
