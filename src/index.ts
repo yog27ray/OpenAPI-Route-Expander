@@ -2,6 +2,7 @@ import fs from 'fs';
 import { Validation } from './validation';
 import { FileUtil } from './util/file.util';
 import {
+  extractFileName,
   fixOpenApiAbsoluteRoute,
   fixOpenApiYamlStringIssue,
   mergeNestedPaths,
@@ -14,7 +15,8 @@ export function resolveRefsInRoutes(inputFilePath: string, outputFilePath: strin
   Validation.pathExist(inputFilePath);
   FileUtil.createDirector(FileUtil.getDirectory(outputFilePath));
   let openApiJSON = FileUtil.readYaml(inputFilePath);
-  openApiJSON = replaceRelativeToAbsolutePath(openApiJSON, FileUtil.getDirectory(inputFilePath));
+  const fileName = extractFileName(inputFilePath);
+  openApiJSON = replaceRelativeToAbsolutePath(openApiJSON, FileUtil.getDirectory(inputFilePath), fileName);
   openApiJSON.paths = mergeNestedPaths(openApiJSON.paths as Record<string, unknown>, inputFilePath);
   openApiJSON = fixOpenApiAbsoluteRoute(openApiJSON, FileUtil.getDirectory(outputFilePath));
   let openAPIYaml = YAMLUtil.stringify(openApiJSON);

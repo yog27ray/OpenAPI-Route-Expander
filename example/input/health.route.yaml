@@ -3,6 +3,14 @@ info:
   title: Health Routes
   description: Health Routes
   version: 0.0.1
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: 'ERROR'
 paths:
   /:
     get:
@@ -17,11 +25,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: 'ERROR'
+                $ref: "#/components/schemas/HealthResponse"
         '500':
           description: Health check failed.
           content:

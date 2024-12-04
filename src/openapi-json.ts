@@ -1,19 +1,26 @@
 import path from 'path';
 import { FileUtil } from './util/file.util';
 
-export function replaceRelativeToAbsolutePath<T extends Record<string, unknown>>(json: T, basePath: string): T {
+export function extractFileName(filePath: string): string {
+  return filePath.split('/').pop();
+}
+
+export function replaceRelativeToAbsolutePath<T extends Record<string, unknown>>(json: T, basePath: string, fileName: string): T {
   if (json instanceof Array) {
-    return json.map((each: Record<string, unknown>) => replaceRelativeToAbsolutePath(each, basePath)) as unknown as T;
+    return json.map((each: Record<string, unknown>) => replaceRelativeToAbsolutePath(each, basePath, fileName)) as unknown as T;
   }
   if (typeof json !== 'object') {
     return json;
   }
   return Object.keys(json).reduce((result: T, key: string): T => {
+    if (key === '$ref' && json[key][0] === '#') {
+      return { ...result, [key]: `${basePath}/${fileName}/${json[key] as string}` };
+    }
     if (key === '$ref' && json[key][0] === '.') {
       return { ...result, [key]: `${basePath}/${json[key] as string}` };
     }
     if (typeof json[key] === 'object') {
-      return { ...result, [key]: replaceRelativeToAbsolutePath(json[key] as Record<string, unknown>, basePath) };
+      return { ...result, [key]: replaceRelativeToAbsolutePath(json[key] as Record<string, unknown>, basePath, fileName) };
     }
     return result;
   }, json);
@@ -32,11 +39,12 @@ export function mergeNestedPaths<T extends Record<string, unknown>>(paths: T, fi
   const currentFolder = filePathSplit.slice(0, filePathSplit.length - 1).join('/');
   return Object.keys(paths).reduce((result, key) => {
     if (['get', 'post', 'put', 'delete'].includes(key)) {
+      const fileName = extractFileName(filePath);
       return {
         ...result,
         [pathPrefix]: {
           ...(result[pathPrefix] || {}),
-          [key]: replaceRelativeToAbsolutePath(paths[key] as T, currentFolder),
+          [key]: replaceRelativeToAbsolutePath(paths[key] as T, currentFolder, fileName),
         } as Record<string, unknown>,
       } as T;
     }
