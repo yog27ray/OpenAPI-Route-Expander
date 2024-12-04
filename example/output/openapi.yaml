@@ -23,11 +23,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: ERROR
+                $ref: "../example/input/health.route.yaml#/components/schemas/HealthResponse"
         "500":
           description: Health check failed.
           content:
