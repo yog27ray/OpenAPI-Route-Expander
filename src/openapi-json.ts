@@ -1,8 +1,8 @@
 import path from 'path';
 import { FileUtil } from './util/file.util';
 
-export function extractFileName(path: string): string {
-  return path.split('/').pop();
+export function extractFileName(filePath: string): string {
+  return filePath.split('/').pop();
 }
 
 export function replaceRelativeToAbsolutePath<T extends Record<string, unknown>>(json: T, basePath: string, fileName: string): T {
