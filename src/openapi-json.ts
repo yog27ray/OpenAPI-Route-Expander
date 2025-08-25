@@ -34,6 +34,15 @@ function extractSubPath<T extends Record<string, unknown>>(json: T, paths: Array
   return extractSubPath(item === '' ? json : json[item] as T, paths);
 }
 
+export function fixTrailingSlash<T extends Record<string, unknown>>(paths: T): T {
+  return Object.keys(paths).reduce((result, key) => {
+    const keyWithoutEndingSlash = key === '/' || key[key.length - 1] !== '/'
+      ? key
+      : key.substring(0, key.length - 1);
+    return { ...result, [keyWithoutEndingSlash]: paths[key] };
+  }, {} as T);
+}
+
 export function mergeNestedPaths<T extends Record<string, unknown>>(paths: T, filePath: string, pathPrefix: string = ''): T {
   const filePathSplit = filePath.split('/');
   const currentFolder = filePathSplit.slice(0, filePathSplit.length - 1).join('/');
